@@ -1,0 +1,52 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7 col-sm-10">
+
+      <div class="card shadow-lg border-0 rounded-4" appPokemonBorder [pokemonType]="pokemon().types[0]">
+
+        <div class="bg-light text-center p-4">
+          <img
+            [src]="pokemon().picture"
+            [alt]="pokemon().name"
+            class="img-fluid"
+            style="max-height: 220px;"
+          />
+        </div>
+
+        <div class="card-body">
+
+          <h2 class="card-title text-center text-capitalize fw-bold mb-4">
+            {{ pokemon().name }}
+          </h2>
+
+          <ul class="list-group list-group-flush">
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="fw-semibold">ID</span>
+              <span>#{{ pokemon().id }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="fw-semibold">Life</span>
+              <span>{{ pokemon().life }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="fw-semibold">Damage</span>
+              <span>{{ pokemon().damage }}</span>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="fw-semibold">Types</span>
+              <span>{{ pokemon().types.join(', ') }}</span>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
