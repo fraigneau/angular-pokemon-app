@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PokemonService } from '../../service/pokemonService';
-import { appPokemonBorder } from '../../directive/app-pokemon-border.directive';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-profile',
-  imports: [appPokemonBorder],
+  imports: [DatePipe],
   templateUrl: './pokemon-profile.html',
   styles: ``,
 })
