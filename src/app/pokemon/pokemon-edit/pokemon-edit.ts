@@ -44,6 +44,10 @@ export class PokemonEdit {
     }
   }
 
+  protected getTextColor(type: string): string {
+    return type === 'Electrik' ? '#000' : '#FFF';
+  }
+
   onSubmit() {
     console.log(this.form.value);
   }

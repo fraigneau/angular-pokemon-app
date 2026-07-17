@@ -62,7 +62,7 @@
                         (click)="pokemonTypesList.removeAt(index)"
                         [ngStyle]="{
                           'background-color': getPokemonColor(type.value),
-                          color: type.value === 'Electrik' ? '#000' : '#FFF',
+                          'color': getTextColor(type.value),
                         }"
                       >
                         {{ type.value }}
