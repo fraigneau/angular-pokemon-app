@@ -1,4 +1,5 @@
- import { Directive, ElementRef, HostListener, input } from '@angular/core';
+import { Directive, ElementRef, HostListener, input } from '@angular/core';
+import { getPokemonColor } from '../model/pokemon.model';
 
 @Directive({
   selector: '[appPokemonBorder]',
@@ -27,25 +28,6 @@ export class appPokemonBorder {
   }
 
   private getBorderColor() {
-    switch (this.pokemonType()) {
-      case 'Feu':
-        return '#EF5350';
-      case 'Eau':
-        return '#42A5F5';
-      case 'Plante':
-        return '#66BB6A';
-      case 'Insecte':
-        return '#8d6e63';
-      case 'Vol':
-        return '#90CAF9';
-      case 'Poison':
-        return '#b388ff';
-      case 'Fée':
-        return '#f8bbd0';
-      case 'Electrik':
-        return '#f4ff81';
-      default:
-        return '#303030';
-    }
+    return getPokemonColor(this.pokemonType().valueOf());
   }
 }
