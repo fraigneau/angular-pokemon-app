@@ -1,99 +1,91 @@
 <div class="container mt-5">
   <div class="card">
     <div class="row g-0">
-      <div
-        class="col-md-4 d-flex align-items-center justify-content-center bg-light"
-      >
-        <img
-          [src]="pokemon().picture"
-          class="img-fluid rounded-start"
-          [alt]="pokemon().name"
-        />
+      <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
+        <img [src]="pokemon().picture" class="img-fluid rounded-start" [alt]="pokemon().name" />
       </div>
       <div class="col-md-8">
-        <form>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="card-body">
             <h2 class="card-title">{{ pokemon().name }}</h2>
             <table class="table">
               <tbody>
-              <tr>
-                <th scope="row">Name</th>
-                <td>
-                  <input
-                    type="text"
-                    class="form-control"
-                    [value]="pokemon().name"
-                    placeholder="Nom du Pokémon"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Points de vie</th>
-                <td>
-                  <div class="input-group">
-                    <button class="btn btn-outline-secondary" disabled>
-                      -
-                    </button>
+                <tr>
+                  <th scope="row">Name</th>
+                  <td>
                     <input
-                      type="number"
-                      class="form-control text-center"
-                      [value]="pokemon().life"
+                      type="text"
+                      class="form-control"
+                      [value]="pokemon().name"
+                      placeholder="Nom du Pokémon"
+                      formControlName="name"
                     />
-                    <button class="btn btn-outline-secondary" disabled>
-                      +
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Dégâts</th>
-                <td>
-                  <div class="input-group">
-                    <button class="btn btn-outline-secondary" disabled>
-                      -
-                    </button>
-                    <input
-                      type="number"
-                      class="form-control text-center"
-                      [value]="pokemon().damage"
-                    />
-                    <button class="btn btn-outline-secondary" disabled>
-                      +
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">Types</th>
-                <td>
-                  @for(type of pokemon().types; track type) {
-                    <button
-                      type="button"
-                      class="btn btn-secondary btn-sm rounded-pill me-2"
-                    >
-                      {{ type }} <span class="badge">x</span>
-                    </button>
-                  }
-                  <div class="row mt-3">
-                    @for(type of pokemonService.getPokemonTypeList(); track
-                      type) {
-                      <div class="col-md-4">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            [value]="type"
-                            [id]="type"
-                          />
-                          <label class="form-check-label" [for]="type">
-                            {{ type }}
-                          </label>
-                        </div>
-                      </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Points de vie</th>
+                  <td>
+                    <div class="input-group">
+                      <button class="btn btn-outline-secondary" disabled>-</button>
+                      <input
+                        type="number"
+                        class="form-control text-center"
+                        [value]="pokemon().life"
+                        formControlName="life"
+                      />
+                      <button class="btn btn-outline-secondary" disabled>+</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Dégâts</th>
+                  <td>
+                    <div class="input-group">
+                      <button class="btn btn-outline-secondary" disabled>-</button>
+                      <input
+                        type="number"
+                        class="form-control text-center"
+                        [value]="pokemon().damage"
+                        formControlName="damage"
+                      />
+                      <button class="btn btn-outline-secondary" disabled>+</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Types</th>
+                  <td>
+                    @for (type of pokemonTypesList.controls; track type; let index = $index) {
+                      <button
+                        type="button"
+                        class="btn btn-secondary btn-sm rounded-pill me-2"
+                        (click)="pokemonTypesList.removeAt(index)"
+                      >
+                        {{ type.value }}
+                      </button>
                     }
-                  </div>
-                </td>
-              </tr>
+                    <div class="row mt-3">
+                      @for (type of pokemonService.getPokemonTypeList(); track type) {
+                        <div class="col-md-4">
+                          <div>
+                            <input
+                              #checkbox
+                              (change)="onPokemonTypeChange(type, checkbox.checked)"
+                              [checked]="isPokemonTypesSelected(type)"
+                              class="form-check-input"
+                              type="checkbox"
+                              [value]="type"
+                              [id]="type"
+                            />
+                            <label class="form-check-label" [for]="type">
+                              {{ type }}
+                            </label>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
             <div class="d-flex justify-content-between mt-4">
