@@ -2,10 +2,12 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../../service/pokemonService';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { getPokemonColor} from '../../model/pokemon.model';
+import { CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-edit',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule],
   templateUrl: './pokemon-edit.html',
   styles: ``,
 })
@@ -14,6 +16,7 @@ export class PokemonEdit {
   readonly pokemonService = inject(PokemonService);
   readonly pokemonId = Number(this.route.snapshot.paramMap.get('id'));
   readonly pokemon = signal(this.pokemonService.getPokemonById(this.pokemonId)).asReadonly();
+  protected readonly getPokemonColor = getPokemonColor;
 
   readonly form = new FormGroup({
     name: new FormControl(this.pokemon().name),
@@ -35,15 +38,13 @@ export class PokemonEdit {
       const control = new FormControl(type);
       this.pokemonTypesList.push(control);
     } else {
-      const index = this.pokemonTypesList.controls
-        .map((control) => control.value)
-        .indexOf(type);
+      const index = this.pokemonTypesList.controls.map((control) => control.value).indexOf(type);
 
       this.pokemonTypesList.removeAt(index);
     }
   }
 
-  onSubmit(){
+  onSubmit() {
     console.log(this.form.value);
   }
 }
