@@ -24,48 +24,20 @@
 
 <div class="container">
   <div class="row">
-    @for(pokemon of pokemonListFiltered(); track pokemon.id) {
-      <div class="col-md-4">
+    @for (pokemon of pokemonListFiltered(); track pokemon.id) {
+      <div class="col-md-4" [routerLink]="['/pokemons', pokemon.id]">
         <div class="card mb-3" appPokemonBorder [pokemonType]="pokemon.types[0]">
           <div class="row g-0">
             <div class="col-md-4 bg-light">
-              <img
-                class="img-fluid rounded-start"
-                [src]="pokemon.picture"
-                [alt]="pokemon.name"
-              />
+              <img class="img-fluid rounded-start" [src]="pokemon.picture" [alt]="pokemon.name" />
             </div>
             <div class="col-md-8">
               <div class="card-body">
                 <h5 class="card-title">{{ pokemon.name }}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">
-                  Taille : {{ size(pokemon) }}
-                </h6>
-                <p class="card-test">{{pokemon.created | date:'dd/MM/yyyy'}}</p>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Taille : {{ size(pokemon) }}</h6>
+                <p class="card-test">{{ pokemon.created | date: 'dd/MM/yyyy' }}</p>
                 <p class="card-text">Points de vie : {{ pokemon.life }}</p>
-                <div class="btn-group btn-group-sm" role="group">
-                  <button
-                    (click)="incrementLife(pokemon)"
-                    class="btn btn-outline-secondary"
-                    [disabled]="pokemon.life >= 30"
-                  >
-                    +
-                  </button>
-                  <button
-                    (click)="decrementLife(pokemon)"
-                    class="btn btn-outline-secondary"
-                    [disabled]="pokemon.life <= 10"
-                  >
-                    -
-                  </button>
-                </div>
-                <div>
-                  <p class="card-text">
-                    <a class="test small text-muted" [routerLink]="['/pokemons', pokemon.id]">
-                      VOIR
-                    </a>
-                  </p>
-                </div>
+                <p class="card-text">Dégâts : {{ pokemon.damage }}</p>
               </div>
             </div>
           </div>
