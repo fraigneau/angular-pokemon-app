@@ -22,9 +22,7 @@
                       placeholder="Nom du Pokémon"
                     />
                     @if (pokemonName.hasError('required')) {
-                      <div class="invalid-feedback">
-                        Veuillez entrer un nom pour le Pokémon.
-                      </div>
+                      <div class="invalid-feedback">Veuillez entrer un nom pour le Pokémon.</div>
                     }
                     @if (pokemonName.hasError('pattern')) {
                       <div class="invalid-feedback">
@@ -33,12 +31,14 @@
                     }
                     @if (pokemonName.hasError('maxlength')) {
                       <div class="invalid-feedback">
-                        Le nom du Pokémon ne peut pas dépasser {{POKEMON_RULES.MAX_NAME}} caractères.
+                        Le nom du Pokémon ne peut pas dépasser
+                        {{ POKEMON_RULES.MAX_NAME }} caractères.
                       </div>
                     }
                     @if (pokemonName.hasError('minlength')) {
                       <div class="invalid-feedback">
-                        Le nom du Pokémon doit contenir au moins {{POKEMON_RULES.MIN_NAME}} caractères.
+                        Le nom du Pokémon doit contenir au moins
+                        {{ POKEMON_RULES.MIN_NAME }} caractères.
                       </div>
                     }
                   </td>
@@ -47,14 +47,26 @@
                   <th scope="row">Points de vie</th>
                   <td>
                     <div class="input-group">
-                      <button class="btn btn-outline-secondary" disabled>-</button>
+                      <button
+                        class="btn btn-outline-secondary"
+                        (click)="decrementLife()"
+                        [disabled]="pokemonLife.value <= POKEMON_RULES.MIN_LIFE"
+                      >
+                        -
+                      </button>
                       <input
                         [value]="pokemon().life"
                         formControlName="life"
                         type="number"
                         class="form-control text-center"
                       />
-                      <button class="btn btn-outline-secondary" disabled>+</button>
+                      <button
+                        class="btn btn-outline-secondary"
+                        (click)="incrementLife()"
+                        [disabled]="pokemonLife.value >= POKEMON_RULES.MAX_LIFE"
+                      >
+                        +
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -62,14 +74,26 @@
                   <th scope="row">Dégâts</th>
                   <td>
                     <div class="input-group">
-                      <button class="btn btn-outline-secondary" disabled>-</button>
+                      <button
+                        class="btn btn-outline-secondary"
+                        (click)="decrementDamage()"
+                        [disabled]="pokemonDamage.value <= POKEMON_RULES.MIN_DAMAGE"
+                      >
+                        -
+                      </button>
                       <input
                         [value]="pokemon().damage"
                         formControlName="damage"
                         type="number"
                         class="form-control text-center"
                       />
-                      <button class="btn btn-outline-secondary" disabled>+</button>
+                      <button
+                        class="btn btn-outline-secondary"
+                        (click)="incrementDamage()"
+                        [disabled]="pokemonDamage.value >= POKEMON_RULES.MAX_DAMAGE"
+                      >
+                        +
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -83,7 +107,7 @@
                         (click)="pokemonTypesList.removeAt(index)"
                         [ngStyle]="{
                           'background-color': getPokemonColor(type.value),
-                          'color': getTextColor(type.value),
+                          color: getTextColor(type.value),
                         }"
                       >
                         {{ type.value }}
