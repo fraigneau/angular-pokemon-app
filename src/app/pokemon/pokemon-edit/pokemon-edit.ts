@@ -32,7 +32,6 @@ export class PokemonEdit {
       [
         Validators.required,
         Validators.maxLength(POKEMON_RULES.MAX_TYPES),
-        Validators.minLength(POKEMON_RULES.MIN_TYPES),
       ],
     ),
   });

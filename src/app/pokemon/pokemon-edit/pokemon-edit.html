@@ -113,6 +113,17 @@
                         {{ type.value }}
                       </button>
                     }
+                    @if (pokemonTypesList.hasError('required')) {
+                      <div class="invalid-feedback d-block">
+                        Veuillez sélectionner au moins un type pour le Pokémon.
+                      </div>
+                    }
+                    @if (pokemonTypesList.hasError('maxlength')) {
+                      <div class="invalid-feedback d-block">
+                        Le Pokémon ne peut pas avoir plus de
+                        {{ POKEMON_RULES.MAX_TYPES }} types.
+                      </div>
+                    }
                     <div class="row mt-3">
                       @for (type of pokemonService.getPokemonTypeList(); track type) {
                         <div class="col-md-4">
