@@ -49,6 +49,7 @@
                     <div class="input-group">
                       <button
                         class="btn btn-outline-secondary"
+                        [class.is-invalid]="pokemonLife.invalid"
                         (click)="decrementLife()"
                         [disabled]="pokemonLife.value <= POKEMON_RULES.MIN_LIFE"
                       >
@@ -62,6 +63,7 @@
                       />
                       <button
                         class="btn btn-outline-secondary"
+                        [class.is-invalid]="pokemonDamage.invalid"
                         (click)="incrementLife()"
                         [disabled]="pokemonLife.value >= POKEMON_RULES.MAX_LIFE"
                       >
