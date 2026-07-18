@@ -155,7 +155,12 @@
               >
                 RETOUR
               </button>
-              <button class="btn btn-link text-decoration-none text-warning">
+              <button
+                class="btn btn-link text-decoration-none text-warning"
+                [disabled]="form.invalid"
+                [class.text-secondary]="form.invalid"
+                [class.text-warning]="form.valid"
+              >
                 SAUVEGARDER LES CHANGEMENT
               </button>
             </div>
