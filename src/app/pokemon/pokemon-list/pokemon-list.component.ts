@@ -33,12 +33,4 @@ export class PokemonListComponent {
     }
     return 'Moyen';
   }
-
-  protected incrementLife(pkm: Pokemon) {
-    pkm.life += 1;
-  }
-
-  protected decrementLife(pkm: Pokemon) {
-    pkm.life -= 1;
-  }
 }
