@@ -25,8 +25,16 @@ export class PokemonEdit {
       Validators.maxLength(POKEMON_RULES.MAX_NAME),
       Validators.minLength(POKEMON_RULES.MIN_NAME),
     ]),
-    life: new FormControl(this.pokemon().life),
-    damage: new FormControl(this.pokemon().damage),
+    life: new FormControl(this.pokemon().life, [
+      Validators.required,
+      Validators.min(POKEMON_RULES.MIN_LIFE),
+      Validators.max(POKEMON_RULES.MAX_LIFE),
+    ]),
+    damage: new FormControl(this.pokemon().damage, [
+      Validators.required,
+      Validators.min(POKEMON_RULES.MIN_DAMAGE),
+      Validators.max(POKEMON_RULES.MAX_DAMAGE),
+    ]),
     type: new FormArray(
       this.pokemon().types.map((type) => new FormControl(type)),
       [
