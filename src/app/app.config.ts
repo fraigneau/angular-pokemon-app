@@ -4,6 +4,7 @@ import { PokemonListComponent } from './pokemon/pokemon-list/pokemon-list.compon
 import { PokemonProfile } from './pokemon/pokemon-profile/pokemon-profile';
 import { PageNotFound } from './config/page-not-found/page-not-found';
 import { PokemonEdit } from './pokemon/pokemon-edit/pokemon-edit';
+import { provideHttpClient } from '@angular/common/http';
 
 const routes: Routes = [
   { path: 'pokemons/edit/:id', component: PokemonEdit, title: 'Edit Pokémon' },
@@ -14,8 +15,5 @@ const routes: Routes = [
 ];
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes),
-  ],
+  providers: [provideBrowserGlobalErrorListeners(), provideRouter(routes), provideHttpClient()],
 };
