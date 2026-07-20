@@ -28,7 +28,9 @@ export class PokemonEdit {
           life: pokemon.life,
           damage: pokemon.damage,
         });
-        pokemon.types.forEach(type => { this.pokemonTypesList.push(new FormControl(type)); });
+        pokemon.types.forEach((type) => {
+          this.pokemonTypesList.push(new FormControl(type));
+        });
       }
     });
   }
@@ -40,15 +42,17 @@ export class PokemonEdit {
       Validators.maxLength(POKEMON_RULES.MAX_NAME),
       Validators.minLength(POKEMON_RULES.MIN_NAME),
     ]),
-    life: new FormControl(),
-    damage: new FormControl(),
-    type: new FormArray(
-      [],
-      [
-        Validators.required,
-        Validators.maxLength(POKEMON_RULES.MAX_TYPES),
-      ],
-    ),
+    life: new FormControl(0, [
+      Validators.required,
+      Validators.min(POKEMON_RULES.MIN_LIFE),
+      Validators.max(POKEMON_RULES.MAX_LIFE),
+    ]),
+    damage: new FormControl(0, [
+      Validators.required,
+      Validators.min(POKEMON_RULES.MIN_DAMAGE),
+      Validators.max(POKEMON_RULES.MAX_DAMAGE),
+    ]),
+    type: new FormArray([], [Validators.required, Validators.maxLength(POKEMON_RULES.MAX_TYPES)]),
   });
 
   get pokemonTypesList(): FormArray {
@@ -98,13 +102,13 @@ export class PokemonEdit {
     return this.form.get('damage') as FormControl;
   }
 
-  decrementDamage() {
-    const newValue = this.pokemonDamage.value - 1;
+  incrementDamage() {
+    const newValue = this.pokemonDamage.value + 1;
     this.pokemonDamage.setValue(newValue);
   }
 
-  incrementDamage() {
-    const newValue = this.pokemonDamage.value + 1;
+  decrementDamage() {
+    const newValue = this.pokemonDamage.value - 1;
     this.pokemonDamage.setValue(newValue);
   }
 
