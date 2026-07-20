@@ -1,20 +1,21 @@
 <div class="container mt-5">
+  @if (pokemon(); as pokemon) {
   <div class="card">
     <div class="row g-0">
       <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
-        <img [src]="pokemon().picture" class="img-fluid rounded-start" [alt]="pokemon().name" />
+        <img [src]="pokemon.picture" class="img-fluid rounded-start" [alt]="pokemon.name" />
       </div>
       <div class="col-md-8">
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="card-body">
-            <h2 class="card-title">{{ pokemon().name }}</h2>
+            <h2 class="card-title">{{ pokemon.name }}</h2>
             <table class="table">
               <tbody>
                 <tr>
                   <th scope="row">Name</th>
                   <td>
                     <input
-                      [value]="pokemon().name"
+                      [value]="pokemon.name"
                       formControlName="name"
                       [class.is-invalid]="pokemonName.invalid"
                       type="text"
@@ -55,7 +56,7 @@
                         -
                       </button>
                       <input
-                        [value]="pokemon().life"
+                        [value]="pokemon.life"
                         formControlName="life"
                         type="number"
                         class="form-control text-center"
@@ -82,7 +83,7 @@
                         -
                       </button>
                       <input
-                        [value]="pokemon().damage"
+                        [value]="pokemon.damage"
                         formControlName="damage"
                         type="number"
                         class="form-control text-center"
@@ -151,7 +152,7 @@
             <div class="d-flex justify-content-between mt-4">
               <button
                 class="btn btn-link text-decoration-none text-warning"
-                [routerLink]="['/pokemons', pokemon().id]"
+                [routerLink]="['/pokemons', pokemon.id]"
               >
                 RETOUR
               </button>
@@ -169,4 +170,11 @@
       </div>
     </div>
   </div>
+  } @else {
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  }
 </div>

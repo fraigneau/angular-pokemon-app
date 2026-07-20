@@ -13,12 +13,9 @@ export class PokemonService {
     return this.#http.get<Pokemon[]>(this.#PKM_API_URL);
   }
 
-  getPokemonById(id: number): Pokemon {
-    const pokemon = PokemonList.find((p) => p.id === id);
-    if (!pokemon) {
-      throw new Error('Pokemon not found with id ${id}.');
-    }
-    return pokemon;
+  getPokemonById(id: number): Observable<Pokemon> {
+    const url = `${this.#PKM_API_URL}/${id}`;
+    return this.#http.get<Pokemon>(url);
   }
 
   getPokemonTypeList(): String[] {

@@ -1,9 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../../service/pokemonService';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getPokemonColor, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-pokemon-edit',
@@ -15,28 +16,34 @@ export class PokemonEdit {
   readonly route = inject(ActivatedRoute);
   readonly pokemonService = inject(PokemonService);
   readonly pokemonId = Number(this.route.snapshot.paramMap.get('id'));
-  readonly pokemon = signal(this.pokemonService.getPokemonById(this.pokemonId)).asReadonly();
+  readonly pokemon = toSignal(this.pokemonService.getPokemonById(this.pokemonId));
   protected readonly getPokemonColor = getPokemonColor;
 
+  constructor() {
+    effect(() => {
+      const pokemon = this.pokemon();
+      if (pokemon) {
+        this.form.patchValue({
+          name: pokemon.name,
+          life: pokemon.life,
+          damage: pokemon.damage,
+        });
+        pokemon.types.forEach(type => { this.pokemonTypesList.push(new FormControl(type)); });
+      }
+    });
+  }
+
   readonly form = new FormGroup({
-    name: new FormControl(this.pokemon().name, [
+    name: new FormControl('', [
       Validators.required,
       Validators.pattern(POKEMON_RULES.NAME_PATTERN),
       Validators.maxLength(POKEMON_RULES.MAX_NAME),
       Validators.minLength(POKEMON_RULES.MIN_NAME),
     ]),
-    life: new FormControl(this.pokemon().life, [
-      Validators.required,
-      Validators.min(POKEMON_RULES.MIN_LIFE),
-      Validators.max(POKEMON_RULES.MAX_LIFE),
-    ]),
-    damage: new FormControl(this.pokemon().damage, [
-      Validators.required,
-      Validators.min(POKEMON_RULES.MIN_DAMAGE),
-      Validators.max(POKEMON_RULES.MAX_DAMAGE),
-    ]),
+    life: new FormControl(),
+    damage: new FormControl(),
     type: new FormArray(
-      this.pokemon().types.map((type) => new FormControl(type)),
+      [],
       [
         Validators.required,
         Validators.maxLength(POKEMON_RULES.MAX_TYPES),
