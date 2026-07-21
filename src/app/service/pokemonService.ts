@@ -16,8 +16,4 @@ export class PokemonService {
     const url = `${this.#POKEMON_API_URL}/${id}`;
     return this.#http.get<Pokemon>(url);
   }
-
-  getPokemonTypeList(): String[] {
-    return ['Plante', 'Feu', 'Eau', 'Insecte', 'Normal', 'Electrik', 'Poison', 'Fée', 'Vol'];
-  }
 }

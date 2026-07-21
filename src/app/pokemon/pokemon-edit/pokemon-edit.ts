@@ -2,7 +2,7 @@ import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../../service/pokemonService';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getPokemonColor, POKEMON_RULES } from '../../model/pokemon.model';
+import { getPokemonColor, getPokemonTypeList, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
 import { PokemonResponse } from '../../service/pokemonResponse';
 
@@ -19,6 +19,7 @@ export class PokemonEdit {
   readonly pokemonResponse = inject(PokemonResponse);
 
   protected readonly getPokemonColor = getPokemonColor;
+  protected readonly pokemonTypeList = getPokemonTypeList();
 
   constructor() {
     effect(() => {
@@ -59,8 +60,6 @@ export class PokemonEdit {
   get getPokemonTypesList(): FormArray {
     return this.form.get('type') as FormArray;
   }
-
-  pokemonTypeList = this.pokemonService.getPokemonTypeList();
 
   isPokemonTypesSelected(type: String): boolean {
     return !!this.getPokemonTypesList.controls.find((control) => control.value === type);

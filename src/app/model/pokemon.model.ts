@@ -1,5 +1,3 @@
-import { InputSignal } from '@angular/core';
-
 export interface Pokemon {
   id: number;
   name: string;
@@ -23,6 +21,8 @@ export const POKEMON_RULES = {
   MAX_TYPES: 3,
   MIN_TYPES: 1,
 } as const;
+
+export function getPokemonTypeList(): string[] { return ['Plante', 'Feu', 'Eau', 'Insecte', 'Normal' , 'Electrik', 'Poison', 'Fée', 'vol']; }
 
 export function getPokemonColor(type: string) {
   switch (type) {
