@@ -1,6 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PokemonService } from '../../service/pokemonService';
+import { RouterLink } from '@angular/router';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getPokemonColor, getPokemonTypeList, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
@@ -14,8 +13,6 @@ import { PokemonResponse } from '../../service/pokemonResponse';
   styles: ``,
 })
 export class PokemonEdit {
-  readonly route = inject(ActivatedRoute);
-  readonly pokemonService = inject(PokemonService);
   readonly pokemonResponse = inject(PokemonResponse);
 
   protected readonly getPokemonColor = getPokemonColor;
