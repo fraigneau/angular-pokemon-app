@@ -1,9 +1,10 @@
 import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PokemonResponse, PokemonService } from '../../service/pokemonService';
+import { PokemonService } from '../../service/pokemonService';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getPokemonColor, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
+import { PokemonResponse } from '../../service/pokemonResponse';
 
 @Component({
   selector: 'app-pokemon-edit',
