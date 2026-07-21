@@ -6,22 +6,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 
 @Service()
-export class PokemonService implements pokemonResponseInterface {
+export class PokemonService {
   readonly #POKEMON_API_URL: string = 'http://localhost:3000/pokemons';
   readonly #http = inject(HttpClient);
-  readonly #route = inject(ActivatedRoute);
-
-  readonly pokemonId = Number(this.#route.snapshot.paramMap.get('id'));
-  readonly pokemonResponse = toSignal(
-    this.getPokemonById(this.pokemonId).pipe(
-      map((pokemon) => ({ value: pokemon, error: undefined })),
-      catchError((error) => of({ value: undefined, error: error })),
-    ),
-  );
-
-  readonly loading = computed(() => this.pokemonResponse() === undefined);
-  readonly error = computed(() => this.pokemonResponse()?.error !== undefined);
-  readonly obj = computed(() => this.pokemonResponse()?.value);
 
   getPokemonList(): Observable<Pokemon[]> {
     return this.#http.get<Pokemon[]>(this.#POKEMON_API_URL);
@@ -37,6 +24,24 @@ export class PokemonService implements pokemonResponseInterface {
   }
 }
 
+@Service()
+export class PokemonResponse implements pokemonResponseInterface {
+  readonly #route = inject(ActivatedRoute);
+  readonly #pokemonService = inject(PokemonService);
+
+  readonly pokemonId = Number(this.#route.snapshot.paramMap.get('id'));
+  readonly pokemonResponse = toSignal(
+    this.#pokemonService.getPokemonById(this.pokemonId).pipe(
+      map((pokemon) => ({ value: pokemon, error: undefined })),
+      catchError((error) => of({ value: undefined, error: error })),
+    ),
+  );
+
+  readonly loading = computed(() => this.pokemonResponse() === undefined);
+  readonly error = computed(() => this.pokemonResponse()?.error !== undefined);
+  readonly pokemon = computed(() => this.pokemonResponse()?.value);
+}
+
 type pokemonResult = { value: Pokemon; error: undefined } | { value: undefined; error: unknown };
 
 export interface pokemonResponseInterface {
@@ -44,5 +49,5 @@ export interface pokemonResponseInterface {
 
   readonly loading: Signal<boolean>;
   readonly error: Signal<boolean>;
-  readonly obj: Signal<Pokemon | undefined>;
+  readonly pokemon: Signal<Pokemon | undefined>;
 }
