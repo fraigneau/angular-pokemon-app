@@ -1,15 +1,14 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { PokemonService } from '../../service/pokemonService';
+import { PokemonResponse, PokemonService } from '../../service/pokemonService';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getPokemonColor, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { catchError, map, of } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-edit',
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  providers: [PokemonResponse],
   templateUrl: './pokemon-edit.html',
   styles: ``,
 })
@@ -18,22 +17,13 @@ export class PokemonEdit {
   readonly pokemonService = inject(PokemonService);
   readonly pokemonId = Number(this.route.snapshot.paramMap.get('id'));
 
-  readonly #pokemonResponse = toSignal(
-    this.pokemonService.getPokemonById(this.pokemonId).pipe(
-      map((pokemon) => ({ value: pokemon, error: undefined })),
-      catchError((error) => of({ value: undefined, error: error })),
-    ),
-  );
-
-  readonly loading = computed(() => this.#pokemonResponse === undefined);
-  readonly error = computed(() => this.#pokemonResponse()?.error !== undefined);
-  readonly pokemon = computed(() => this.#pokemonResponse()?.value);
+  readonly pokemonResponse = inject(PokemonResponse);
 
   protected readonly getPokemonColor = getPokemonColor;
 
   constructor() {
     effect(() => {
-      const pokemon = this.pokemon();
+      const pokemon = this.pokemonResponse.pokemon();
       if (pokemon) {
         this.form.patchValue({
           name: pokemon.name,
