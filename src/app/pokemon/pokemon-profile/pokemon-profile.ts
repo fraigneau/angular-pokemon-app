@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PokemonService } from '../../service/pokemonService';
 import { DatePipe } from '@angular/common';
@@ -18,9 +18,10 @@ export class PokemonProfile {
 
   readonly #pokemonResponse = toSignal(
     this.#pokemonService.getPokemonById(this.#pokemonId).pipe(
-      map(pokemon => ({value: pokemon, error: undefined})),
-      catchError(error => of({value: undefined, error: error}))
-  ))
+      map((pokemon) => ({ value: pokemon, error: undefined })),
+      catchError((error) => of({ value: undefined, error: error })),
+    ),
+  );
 
   readonly loading = computed(() => this.#pokemonResponse === undefined);
   readonly error = computed(() => this.#pokemonResponse()?.error !== undefined);
