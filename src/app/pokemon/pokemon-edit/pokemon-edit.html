@@ -101,11 +101,11 @@
                 <tr>
                   <th scope="row">Types</th>
                   <td>
-                    @for (type of pokemonTypesList.controls; track type; let index = $index) {
+                    @for (type of getPokemonTypesList.controls; track type; let index = $index) {
                       <button
                         type="button"
                         class="btn btn-secondary btn-sm rounded-pill me-2"
-                        (click)="pokemonTypesList.removeAt(index)"
+                        (click)="getPokemonTypesList.removeAt(index)"
                         [ngStyle]="{
                           'background-color': getPokemonColor(type.value),
                           color: getTextColor(type.value),
@@ -114,19 +114,19 @@
                         {{ type.value }}
                       </button>
                     }
-                    @if (pokemonTypesList.hasError('required')) {
+                    @if (getPokemonTypesList.hasError('required')) {
                       <div class="invalid-feedback d-block">
                         Veuillez sélectionner au moins un type pour le Pokémon.
                       </div>
                     }
-                    @if (pokemonTypesList.hasError('maxlength')) {
+                    @if (getPokemonTypesList.hasError('maxlength')) {
                       <div class="invalid-feedback d-block">
                         Le Pokémon ne peut pas avoir plus de
                         {{ POKEMON_RULES.MAX_TYPES }} types.
                       </div>
                     }
                     <div class="row mt-3">
-                      @for (type of pokemonService.getPokemonTypeList(); track type) {
+                      @for (type of pokemonTypeList; track type) {
                         <div class="col-md-4">
                           <div>
                             <input

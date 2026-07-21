@@ -15,8 +15,6 @@ import { CommonModule } from '@angular/common';
 export class PokemonEdit {
   readonly route = inject(ActivatedRoute);
   readonly pokemonService = inject(PokemonService);
-  readonly pokemonId = Number(this.route.snapshot.paramMap.get('id'));
-
   readonly pokemonResponse = inject(PokemonResponse);
 
   protected readonly getPokemonColor = getPokemonColor;
@@ -31,7 +29,7 @@ export class PokemonEdit {
           damage: pokemon.damage,
         });
         pokemon.types.forEach((type) => {
-          this.pokemonTypesList.push(new FormControl(type));
+          this.getPokemonTypesList.push(new FormControl(type));
         });
       }
     });
@@ -57,22 +55,24 @@ export class PokemonEdit {
     type: new FormArray([], [Validators.required, Validators.maxLength(POKEMON_RULES.MAX_TYPES)]),
   });
 
-  get pokemonTypesList(): FormArray {
+  get getPokemonTypesList(): FormArray {
     return this.form.get('type') as FormArray;
   }
 
+  pokemonTypeList = this.pokemonService.getPokemonTypeList();
+
   isPokemonTypesSelected(type: String): boolean {
-    return !!this.pokemonTypesList.controls.find((control) => control.value === type);
+    return !!this.getPokemonTypesList.controls.find((control) => control.value === type);
   }
 
   onPokemonTypeChange(type: String, isChecked: boolean) {
     if (isChecked) {
       const control = new FormControl(type);
-      this.pokemonTypesList.push(control);
+      this.getPokemonTypesList.push(control);
     } else {
-      const index = this.pokemonTypesList.controls.map((control) => control.value).indexOf(type);
+      const index = this.getPokemonTypesList.controls.map((control) => control.value).indexOf(type);
 
-      this.pokemonTypesList.removeAt(index);
+      this.getPokemonTypesList.removeAt(index);
     }
   }
 
