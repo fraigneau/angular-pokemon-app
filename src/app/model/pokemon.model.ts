@@ -22,7 +22,9 @@ export const POKEMON_RULES = {
   MIN_TYPES: 1,
 } as const;
 
-export function getPokemonTypeList(): string[] { return ['Plante', 'Feu', 'Eau', 'Insecte', 'Normal' , 'Electrik', 'Poison', 'Fée', 'vol']; }
+export function getPokemonTypeList(): string[] {
+  return ['Plante', 'Feu', 'Eau', 'Insecte', 'Normal', 'Electrik', 'Poison', 'Fée', 'Vol'];
+}
 
 export function getPokemonColor(type: string) {
   switch (type) {
@@ -46,4 +48,3 @@ export function getPokemonColor(type: string) {
       return '#303030';
   }
 }
-

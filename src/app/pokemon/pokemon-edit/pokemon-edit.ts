@@ -3,24 +3,24 @@ import { RouterLink } from '@angular/router';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getPokemonColor, getPokemonTypeList, POKEMON_RULES } from '../../model/pokemon.model';
 import { CommonModule } from '@angular/common';
-import { PokemonResponse } from '../../service/pokemonResponse';
+import { PokemonDetailState } from '../../service/pokemon-detail-state';
 
 @Component({
   selector: 'app-pokemon-edit',
   imports: [RouterLink, ReactiveFormsModule, CommonModule],
-  providers: [PokemonResponse],
+  providers: [PokemonDetailState],
   templateUrl: './pokemon-edit.html',
   styles: ``,
 })
 export class PokemonEdit {
-  readonly pokemonResponse = inject(PokemonResponse);
+  readonly pokemonDetailState = inject(PokemonDetailState);
 
   protected readonly getPokemonColor = getPokemonColor;
   protected readonly pokemonTypeList = getPokemonTypeList();
 
   constructor() {
     effect(() => {
-      const pokemon = this.pokemonResponse.pokemon();
+      const pokemon = this.pokemonDetailState.pokemon();
       if (pokemon) {
         this.form.patchValue({
           name: pokemon.name,

@@ -1,5 +1,5 @@
 <div class="container mt-5">
-  @if (pokemonResponse.pokemon(); as pokemon) {
+  @if (pokemonDetailState.pokemon(); as pokemon) {
   <div class="card">
     <div class="row g-0">
       <div class="col-md-4 d-flex align-items-center justify-content-center bg-light">
@@ -170,14 +170,14 @@
       </div>
     </div>
   </div>
-  } @if (pokemonResponse.loading()) {
+  } @if (pokemonDetailState.loading()) {
   <div class="d-flex justify-content-center">
     <div class="spinner-border text-success" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 }
-  @if (pokemonResponse.error()) {
+  @if (pokemonDetailState.error()) {
     <div class="container text-center mt-5">
       <div class="card">
         <div class="card-bady">
