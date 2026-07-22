@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { PokemonResponse } from '../../service/pokemonResponse';
+import { PokemonDetailState } from '../../service/pokemon-detail-state';
 
 @Component({
   selector: 'app-pokemon-profile',
   imports: [DatePipe, RouterLink],
-  providers: [PokemonResponse],
+  providers: [PokemonDetailState],
   templateUrl: './pokemon-profile.html',
   styles: ``,
 })
 export class PokemonProfile {
-  readonly pokemonService = inject(PokemonResponse);
+  readonly pokemonDetailState = inject(PokemonDetailState);
 }
